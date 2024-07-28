@@ -12,7 +12,7 @@ SOURCES += $$files(**.cpp, true)
 FORMS += 
 RESOURCES += resources.qrc
 message(get arch)
-message($$(OVERRIDE_ARCH))
+# message($$(OVERRIDE_ARCH))
 ARCH_FORCE = $$(OVERRIDE_ARCH)
 contains(ARCH_FORCE, 64){
     DEFINES += __ARCH64__
@@ -56,7 +56,7 @@ DEFINES += MIDIEDITOR_RELEASE_VERSION_ID_DEF=$$MIDIEDITOR_RELEASE_VERSION_ID_QMA
 MIDIEDITOR_RELEASE_DATE_QMAKE=$$(MIDIEDITOR_RELEASE_DATE)
 isEmpty(MIDIEDITOR_RELEASE_DATE_QMAKE) {
     # Read current date
-    MIDIEDITOR_RELEASE_DATE_QMAKE=\"$$quote($$system("date"))\"
+    MIDIEDITOR_RELEASE_DATE_QMAKE=\"$$quote($$system(date +"'%Y-%m-%d'"))\"
 }
 DEFINES += MIDIEDITOR_RELEASE_DATE_DEF=$$MIDIEDITOR_RELEASE_DATE_QMAKE
 message(Release date is set to $$MIDIEDITOR_RELEASE_DATE_QMAKE)
@@ -65,7 +65,6 @@ unix:!macx {
     DEFINES += __LINUX_ALSASEQ__
     DEFINES += __LINUX_ALSA__
     LIBS += -lasound
-    CONFIG += release
     OBJECTS_DIR = .tmp
     MOC_DIR = .tmp
 }
@@ -73,7 +72,6 @@ unix:!macx {
 win32: {
     DEFINES += __WINDOWS_MM__
     LIBS += -lwinmm
-    CONFIG += release
     RC_FILE = midieditor.rc
     OBJECTS_DIR = .tmp
     MOC_DIR = .tmp
@@ -83,7 +81,6 @@ win32: {
 macx: {
     DEFINES += __MACOSX_CORE__
     LIBS += -framework CoreMidi -framework CoreAudio -framework CoreFoundation
-    CONFIG += release
     OBJECTS_DIR = .tmp
     MOC_DIR = .tmp
     ICON = midieditor.icns
